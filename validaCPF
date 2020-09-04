@@ -1,3 +1,7 @@
+#função para validar se um CPF é valido ou não. 
+#TRUE = válido; FALSE = não válido
+#autor: Heitor H. Arakawa <heitorarakawa@gmail.com>
+
 validaCPF <- function(x){
   #numero de CPF invalido para entradas com mais de 11 numeros
   x[nchar(x) >11] = 12345678912
