@@ -1,3 +1,6 @@
+#Conta o número de elemento iguais nas colunas de um dataframe
+#autor: Heitor H. Arakawa <heitorarakawa@gmail.com>
+
 intersectMatrix <- function(x) {
   n = ncol(x)
   res = matrix(NA, n, n)
