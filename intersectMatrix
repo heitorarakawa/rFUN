@@ -1,0 +1,12 @@
+intersectMatrix <- function(x) {
+  n = ncol(x)
+  res = matrix(NA, n, n)
+  colnames(res) = colnames(x)
+  rownames(res) = colnames(x)
+  for (i in 1:n) {
+    for (j in 1:n) {
+      res[i, j] = length(intersect(x[, i], x[, j]))
+    }
+  }
+  return(res)
+}
