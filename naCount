@@ -1,0 +1,17 @@
+#' Counts number of NA per column
+#'
+#' Count and display number of NAs per column in a data frame.
+#'
+#'
+#' @param x data frame
+#' @param perc a logical indicating whether the result should be the sum of NAs in each column (default case perc = FALSE) or the percentage of nrow.
+#' @return number of NAs for each column
+#' @export
+
+naCount <- function(x, perc = FALSE){
+  if(perc == FALSE){
+    colSums(is.na(x))
+  } else {
+    round(colSums(is.na(x))/nrow(x), 3)
+  }
+}
