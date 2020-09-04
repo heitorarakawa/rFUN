@@ -1,0 +1,30 @@
+validaCPF <- function(x){
+  #numero de CPF invalido para entradas com mais de 11 numeros
+  x[nchar(x) >11] = 12345678912
+
+  #pesos que serão utilizados na multiplicacao de cada digito
+  pesos1 = c(10, 9, 8, 7, 6, 5, 4, 3, 2, 0, 0)
+  pesos2 = c(11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 0)
+
+  #completando numeros com zeros a esquerda
+  cpfCompleto = stringr::str_pad(x, 11, pad = "0")
+
+  #transformando cada digito em um elemento de uma matrix. Cada linha corresponde a um CPF
+  matrixCPF = matrix(as.numeric(unlist(strsplit(cpfCompleto, ""))), nrow = length(x), byrow = TRUE)
+
+  #verificar primeiro digito
+  sumMatrixCPF = rowSums(matrixCPF %*% diag(pesos1))*10 #multiplica cada elemento pelo peso, soma a linha e multiplica por 10
+  remainderCPF = sumMatrixCPF%%11 #calcula o resto da divisao de cada elemento por 11
+  remainderCPF[remainderCPF == 10] = 0 #caso o resto for igual a 10, substitui por 0
+  result1 = remainderCPF == matrixCPF[, 10] #compara com o primeiro digito verificador e armazena o resultado
+
+  #verificar segundo digito
+  sumMatrixCPF = rowSums(matrixCPF %*% diag(pesos2))*10
+  remainderCPF = sumMatrixCPF%%11
+  remainderCPF[remainderCPF == 10] = 0
+  result2 = remainderCPF == matrixCPF[, 11] #compara com o segundo digito verificador e armazena o resultado
+
+  #resultado
+  result = result1 & result2 #se as duas verificoes forem TRUE, entao o resultado é TRUE. Caso contrario, FALSE
+  return(result)
+}
